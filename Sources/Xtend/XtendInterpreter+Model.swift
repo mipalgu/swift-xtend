@@ -196,18 +196,22 @@ extension XtendInterpreter {
         if value.isNull { return nil }
         let items = Self.isMany(feature) ? (isIterable(value) ? try elements(of: value, range: range, context) : [value]) : [value]
         if feature is EReference {
-            let identifiers = try items.map { item -> EUUID in
+            var identifiers: [EUUID] = []
+            identifiers.reserveCapacity(items.count)
+            for item in items {
                 guard case .object(let target) = item else {
                     throw failure(
                         .typeMismatch, "The reference '\(feature.name)' needs model objects, not \(item.typeDescription)",
                         range, context)
                 }
-                return target.id
+                identifiers.append(target.id)
             }
             return Self.isMany(feature) ? identifiers : identifiers.first
         }
         let dataType = (feature as? EAttribute)?.eType
-        let scalars = try items.map { try scalar($0, type: dataType, feature: feature.name, range: range, context) }
+        var scalars: [any EcoreValue] = []
+        scalars.reserveCapacity(items.count)
+        for item in items { scalars.append(try scalar(item, type: dataType, feature: feature.name, range: range, context)) }
         guard Self.isMany(feature) else { return scalars.first }
         if let texts = scalars as? [String] { return texts }
         if let numbers = scalars as? [Int] { return numbers }

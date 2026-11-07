@@ -76,7 +76,8 @@ extension XtendInterpreter {
         case .instanceOf(let operand, let type):
             let value = try await eval(operand, context)
             let resolved = try resolveOrFail(type, context)
-            return .bool(!value.isNull && conforms(value, to: resolved))
+            if value.isNull { return .bool(false) }
+            return .bool(conforms(value, to: resolved))
         case .cast(let operand, let type):
             let value = try await eval(operand, context)
             if value.isNull { return .null }
@@ -227,7 +228,8 @@ extension XtendInterpreter {
         for (index, item) in switchExpression.cases.enumerated() {
             if let typeGuard = item.typeGuard {
                 let type = try resolveOrFail(typeGuard, context)
-                if subject.isNull || !conforms(subject, to: type) { continue }
+                if subject.isNull { continue }
+                if !conforms(subject, to: type) { continue }
             }
             if let condition = item.condition {
                 let value = try await eval(condition, inner)
