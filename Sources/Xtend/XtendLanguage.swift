@@ -41,6 +41,12 @@ public enum XtendLanguage {
     /// followed by a generator context.
     public static let generatorMethodNames = ["doGenerate", "generate"]
 
+    /// The numbers of parameters that a generator method can take, in order of preference.
+    ///
+    /// A generator method takes the input resource and a file system access, optionally
+    /// followed by a generator context.
+    public static let generatorArities = [2, 3]
+
     /// The name of the implicit parameter of a lambda expression with one argument.
     public static let implicitParameter = "it"
 

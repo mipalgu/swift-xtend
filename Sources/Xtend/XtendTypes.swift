@@ -42,7 +42,7 @@ struct XtendTypeResolver: Sendable {
     let packageNames: Set<String>
 
     /// The superclass of each class of the compilation set, by qualified name.
-    private let superclasses: [String: String]
+    let superclasses: [String: String]
 
     /// The qualified names of the classes of the compilation set, by simple and qualified name.
     private let classNames: [String: String]

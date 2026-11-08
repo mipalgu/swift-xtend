@@ -29,8 +29,10 @@ class SwiftGenerator extends AbstractGenerator {
 }
 ```
 
-Run it with ``XtendInterpreter/generate(resource:fileSystem:className:)``. The context is
-passed as `null`. `generateFile` takes a relative path and the contents, optionally with the
+Run it with ``XtendInterpreter/generate(resource:fileSystem:className:)``. Without a class
+name, the generator is the first class of the program that is not abstract and has such a
+method, which ``XtendProgram/generatorClass(named:)`` names, so that helper classes can share
+the program. The context is passed as `null`. `generateFile` takes a relative path and the contents, optionally with the
 name of an output configuration between them. ``XtendInMemoryFileSystemAccess`` keeps the files
 in memory, and ``XtendDirectoryFileSystemAccess`` writes them below output directories.
 

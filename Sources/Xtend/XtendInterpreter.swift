@@ -145,9 +145,10 @@ public actor XtendInterpreter {
 
     /// Runs a generator over a resource.
     ///
-    /// The generator is the first class (or the named class) with a method named after one
-    /// of ``XtendLanguage/generatorMethodNames`` that takes the resource and the file system
-    /// access, optionally followed by a generator context, which is passed as `null`.
+    /// The generator is the named class or else the first class that is not abstract and has
+    /// a method named after one of ``XtendLanguage/generatorMethodNames`` that takes the
+    /// resource and the file system access, optionally followed by a generator context, which
+    /// is passed as `null` (see ``XtendProgram/generatorClass(named:)``).
     ///
     /// - Parameters:
     ///   - resource: The input resource.
@@ -156,24 +157,17 @@ public actor XtendInterpreter {
     /// - Throws: ``XtendError`` if no generator is found or evaluation fails.
     public func generate(resource: Resource, fileSystem: any XtendFileSystemAccess, className: String? = nil) async throws {
         addResource(resource)
-        let candidates = className.map { [$0] } ?? program.classNames
-        for name in candidates {
-            guard let info = program.classInfo(name) else { continue }
-            for methodName in XtendLanguage.generatorMethodNames {
-                for arity in [2, 3] where !methods(named: methodName, arity: arity, in: info.declaration.qualifiedName).isEmpty {
-                    let instance = try await instantiate(info.declaration.qualifiedName, arguments: [], range: info.declaration.nameRange)
-                    var arguments: [XtendValue] = [.resource(resource), .fileSystem(fileSystem)]
-                    if arity == 3 { arguments.append(.null) }
-                    _ = try await callClassMethod(
-                        methodName, arguments: arguments, this: instance, className: instance.className,
-                        range: info.declaration.nameRange)
-                    return
-                }
-            }
+        guard let entry = program.generatorEntry(className: className), let info = program.classes[entry.className] else {
+            throw XtendError(
+                .unknownFeature,
+                "No generator class with a method \(XtendLanguage.generatorMethodNames.joined(separator: " or "))(resource, fsa) was found")
         }
-        throw XtendError(
-            .unknownFeature,
-            "No generator class with a method \(XtendLanguage.generatorMethodNames.joined(separator: " or "))(resource, fsa) was found")
+        let instance = try await instantiate(entry.className, arguments: [], range: info.declaration.nameRange)
+        var arguments: [XtendValue] = [.resource(resource), .fileSystem(fileSystem)]
+        if entry.arity > arguments.count { arguments.append(.null) }
+        _ = try await callClassMethod(
+            entry.methodName, arguments: arguments, this: instance, className: instance.className,
+            range: info.declaration.nameRange)
     }
 
     /// Evaluates a standalone expression.
@@ -243,14 +237,7 @@ public actor XtendInterpreter {
 
     /// The class and its superclasses, most derived first.
     func classChain(_ className: String) -> [XtendClassInfo] {
-        var chain: [XtendClassInfo] = []
-        var current: String? = className
-        var visited: Set<String> = []
-        while let name = current, visited.insert(name).inserted, let info = program.classes[name] {
-            chain.append(info)
-            current = info.superclass
-        }
-        return chain
+        program.classChain(className)
     }
 
     /// The methods with a name and number of parameters, most derived first, without
