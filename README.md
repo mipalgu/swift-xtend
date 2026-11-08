@@ -90,7 +90,8 @@ covers the API and the supported language, including:
 
 See the details in the LICENCE file.
 
-This is an independent implementation based on the public Xtend documentation.
+This is an independent implementation based on the public
+[Xtend documentation](https://eclipse.dev/Xtext/xtend/documentation/).
 
 ## References
 
