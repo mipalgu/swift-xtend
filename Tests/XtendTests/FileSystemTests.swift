@@ -86,4 +86,25 @@ struct FileSystemTests {
             try await interpreter.generate(resource: interpreter.targetResource, fileSystem: XtendInMemoryFileSystemAccess())
         }
     }
+
+    /// Files are written in the encoding that the access is given, and UTF-8 by default.
+    @Test("Directory file system access encodings")
+    func directoryEncoding() async throws {
+        let base = FileManager.default.temporaryDirectory.appendingPathComponent("xtend-enc-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: base) }
+        let general = XtendDirectoryFileSystemAccess(outputDirectory: base)
+        #expect(general.encoding == .utf8)
+        try await general.generateFile("u.txt", outputConfiguration: XtendLanguage.defaultOutputConfiguration, contents: "caf\u{E9}\u{20AC}")
+        #expect(try Data(contentsOf: base.appendingPathComponent("u.txt")) == Data("caf\u{E9}\u{20AC}".utf8))
+        let latin = XtendDirectoryFileSystemAccess(outputDirectory: base, outputConfigurations: [:], encoding: .isoLatin1)
+        try await latin.generateFile("l.txt", outputConfiguration: XtendLanguage.defaultOutputConfiguration, contents: "caf\u{E9}")
+        #expect(try Data(contentsOf: base.appendingPathComponent("l.txt")) == Data([0x63, 0x61, 0x66, 0xE9]))
+        await #expect {
+            try await latin.generateFile("d/x.txt", outputConfiguration: XtendLanguage.defaultOutputConfiguration, contents: "a\nb \u{20AC}")
+        } throws: { error in
+            let message = (error as? XtendError)?.diagnostics.first?.message ?? ""
+            return message.contains("x.txt") && message.contains("line 2, column 3") && message.contains("U+20AC")
+        }
+        #expect(!FileManager.default.fileExists(atPath: base.appendingPathComponent("d/x.txt").path))
+    }
 }

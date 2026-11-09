@@ -4,6 +4,7 @@
 //
 //  Copyright © 2026 Rene Hexel. All rights reserved.
 //
+public import EMFBase
 public import Foundation
 
 /// Receives the files that a generator writes.
@@ -140,7 +141,10 @@ public struct XtendDirectoryFileSystemAccess: XtendFileSystemAccess {
     /// The directories of further output configurations by name.
     public let outputConfigurations: [String: URL]
 
-    /// Creates a file system access.
+    /// The character encoding of the files written (UTF-8 unless another is given).
+    public let encoding: TextEncoding
+
+    /// Creates a file system access that writes UTF-8.
     ///
     /// - Parameters:
     ///   - outputDirectory: The directory of the default output configuration.
@@ -148,6 +152,22 @@ public struct XtendDirectoryFileSystemAccess: XtendFileSystemAccess {
     public init(outputDirectory: URL, outputConfigurations: [String: URL] = [:]) {
         self.outputDirectory = outputDirectory
         self.outputConfigurations = outputConfigurations
+        self.encoding = .utf8
+    }
+
+    /// Creates a file system access that writes files in a character encoding.
+    ///
+    /// A character that the encoding cannot hold makes ``generateFile(_:outputConfiguration:contents:)``
+    /// throw an error that names the file, the line and the column; the file is then not written.
+    ///
+    /// - Parameters:
+    ///   - outputDirectory: The directory of the default output configuration.
+    ///   - outputConfigurations: The directories of further output configurations.
+    ///   - encoding: The character encoding of the files.
+    public init(outputDirectory: URL, outputConfigurations: [String: URL], encoding: TextEncoding) {
+        self.outputDirectory = outputDirectory
+        self.outputConfigurations = outputConfigurations
+        self.encoding = encoding
     }
 
     /// Writes a generated file below the directory of its output configuration.
@@ -155,8 +175,9 @@ public struct XtendDirectoryFileSystemAccess: XtendFileSystemAccess {
     /// - Parameters:
     ///   - path: The relative path of the file.
     ///   - outputConfiguration: The name of the output configuration.
-    ///   - contents: The text of the file, written as UTF-8.
-    /// - Throws: ``XtendError`` if the path is invalid or the configuration is unknown, or
+    ///   - contents: The text of the file, written in ``encoding`` (UTF-8 by default).
+    /// - Throws: ``XtendError`` if the path is invalid, the configuration is unknown, or the
+    ///   encoding cannot hold a character of the text (in which case no file is written), or
     ///   the error of the file system.
     public func generateFile(_ path: String, outputConfiguration: String, contents: String) async throws {
         let segments = try XtendFilePath.components(of: path)
@@ -170,7 +191,13 @@ public struct XtendDirectoryFileSystemAccess: XtendFileSystemAccess {
         }
         var url = base
         for segment in segments { url.appendPathComponent(segment) }
+        let data: Data
+        do {
+            data = try encoding.encode(contents)
+        } catch {
+            throw XtendError(.fileAccess, "Cannot write \(url.path): \(error)")
+        }
         try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
-        try Data(contents.utf8).write(to: url)
+        try data.write(to: url)
     }
 }
