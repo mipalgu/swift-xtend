@@ -14,7 +14,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/mipalgu/swift-ecore", branch: "release/0.8"),
+        .package(url: "https://github.com/mipalgu/swift-ecore", exact: "0.8.0"),
     ],
     targets: [
         .target(
