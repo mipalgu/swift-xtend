@@ -67,3 +67,18 @@ Call an entry method with ``XtendInterpreter/call(_:of:arguments:)``, passing mo
 A resource that holds an Ecore metamodel can be the input of a generator. Its packages,
 classes, attributes, references and enumerations expose the features of the Ecore metamodel,
 so `c.name`, `c.abstract`, `c.ESuperTypes` and `c.EAllStructuralFeatures` work as in Java.
+
+## Related Documentation
+
+### Command-Line Tool and Tutorials
+
+- [swift-xtend](https://mipalgu.github.io/swift-modelling/documentation/swift_xtend/index.html): the `swift-xtend` command-line tool of swift-modelling
+- [Code Generation with Xtend](https://mipalgu.github.io/swift-modelling/tutorials/swiftmodelling/xtend-01-code-generation/index.html)
+- [All tutorials](https://mipalgu.github.io/swift-modelling/tutorials/tutorials/index.html)
+
+### Related Packages
+
+- [swift-ecore](https://mipalgu.github.io/swift-ecore/documentation/ecore/) - Ecore metamodels and models that Xtend programs work on
+- [swift-mtl](https://mipalgu.github.io/swift-mtl/) - MTL model-to-text generation
+- [swift-epsilon](https://mipalgu.github.io/swift-epsilon/documentation/egl/) - Epsilon Generation Language (EGL) for model-to-text generation
+- [swift-modelling](https://mipalgu.github.io/swift-modelling/) - Command-line tools, code generators and tutorials

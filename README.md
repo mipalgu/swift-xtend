@@ -86,6 +86,24 @@ covers the API and the supported language, including:
 - [Generators and Transformations](https://mipalgu.github.io/swift-xtend/documentation/xtend/generators):
   writing files and building models from models
 
+The `swift-xtend` command-line tool of [swift-modelling](https://mipalgu.github.io/swift-modelling/)
+is described in [swift-xtend](https://mipalgu.github.io/swift-modelling/documentation/swift_xtend/index.html),
+and the [Xtend tutorial](https://mipalgu.github.io/swift-modelling/tutorials/swiftmodelling/xtend-01-code-generation/index.html)
+introduces it step by step (see all [tutorials](https://mipalgu.github.io/swift-modelling/tutorials/tutorials/index.html)).
+
+- [Code Generation with Xtend](https://mipalgu.github.io/swift-modelling/tutorials/swiftmodelling/xtend-01-code-generation/index.html): generating code from a model with Xtend
+- [All tutorials](https://mipalgu.github.io/swift-modelling/tutorials/tutorials/index.html)
+
+## Related Packages
+
+- [swift-ecore](https://mipalgu.github.io/swift-ecore/) - EMF/Ecore metamodelling, OCL, generator models and multi-level modelling ([GitHub](https://github.com/mipalgu/swift-ecore))
+- [swift-aql](https://mipalgu.github.io/swift-aql/) - AQL model queries ([GitHub](https://github.com/mipalgu/swift-aql))
+- [swift-mtl](https://mipalgu.github.io/swift-mtl/) - MTL model-to-text generation ([GitHub](https://github.com/mipalgu/swift-mtl))
+- [swift-atl](https://mipalgu.github.io/swift-atl/) - ATL model transformations ([GitHub](https://github.com/mipalgu/swift-atl))
+- [swift-henshin](https://mipalgu.github.io/swift-henshin/) - Henshin graph transformation, critical pair analysis and state-space exploration ([GitHub](https://github.com/mipalgu/swift-henshin))
+- [swift-epsilon](https://mipalgu.github.io/swift-epsilon/) - Epsilon model management languages (EOL, EVL, ETL and EGL) ([GitHub](https://github.com/mipalgu/swift-epsilon))
+- [swift-modelling](https://mipalgu.github.io/swift-modelling/) - Command-line tools, code generators and tutorials for the whole toolkit ([GitHub](https://github.com/mipalgu/swift-modelling))
+
 ## Licence
 
 See the details in the LICENCE file.
@@ -98,4 +116,3 @@ This is an independent implementation based on the public
 - [Xtend documentation](https://eclipse.dev/Xtext/xtend/documentation/) - The language this package interprets a subset of
 - [Xtext and Xbase](https://eclipse.dev/Xtext/) - The framework and expression language that Xtend builds on
 - [Eclipse Modeling Framework (EMF)](https://eclipse.dev/emf/) - The metamodelling foundation
-- [swift-ecore](https://github.com/mipalgu/swift-ecore) - The Swift Ecore metamodelling framework
