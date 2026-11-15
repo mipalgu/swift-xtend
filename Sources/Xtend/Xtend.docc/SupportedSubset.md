@@ -50,3 +50,18 @@ offending expression runs.
 runaway program ends with ``XtendDiagnosticCode/recursionLimit`` or
 ``XtendDiagnosticCode/stepLimit``. Generated file paths must be relative and must not leave
 the output location (see ``XtendFilePath``).
+
+## Related Documentation
+
+### Command-Line Tool and Tutorials
+
+- [swift-xtend](https://mipalgu.github.io/swift-modelling/documentation/swift_xtend/index.html): the `swift-xtend` command-line tool of swift-modelling
+- [Code Generation with Xtend](https://mipalgu.github.io/swift-modelling/tutorials/swiftmodelling/xtend-01-code-generation/index.html)
+- [All tutorials](https://mipalgu.github.io/swift-modelling/tutorials/tutorials/index.html)
+
+### Related Packages
+
+- [swift-ecore](https://mipalgu.github.io/swift-ecore/documentation/ecore/) - Ecore metamodels and models that Xtend programs work on
+- [swift-mtl](https://mipalgu.github.io/swift-mtl/) - MTL model-to-text generation
+- [swift-epsilon](https://mipalgu.github.io/swift-epsilon/documentation/egl/) - Epsilon Generation Language (EGL) for model-to-text generation
+- [swift-modelling](https://mipalgu.github.io/swift-modelling/) - Command-line tools, code generators and tutorials

@@ -28,13 +28,27 @@ dependencies: [
 
 ## Related Packages
 
-- [swift-ecore](https://github.com/mipalgu/swift-ecore) - EMF/Ecore metamodelling
-- [swift-aql](https://github.com/mipalgu/swift-aql) - AQL model queries
-- [swift-atl](https://github.com/mipalgu/swift-atl) - ATL model transformations
-- [swift-mtl](https://github.com/mipalgu/swift-mtl) - MTL code generation
-- [swift-modelling](https://github.com/mipalgu/swift-modelling) - Unified MDE toolkit
+- [swift-ecore](https://mipalgu.github.io/swift-ecore/) - EMF/Ecore metamodelling, OCL, generator models and multi-level modelling ([GitHub](https://github.com/mipalgu/swift-ecore))
+- [swift-aql](https://mipalgu.github.io/swift-aql/) - AQL model queries ([GitHub](https://github.com/mipalgu/swift-aql))
+- [swift-mtl](https://mipalgu.github.io/swift-mtl/) - MTL model-to-text generation ([GitHub](https://github.com/mipalgu/swift-mtl))
+- [swift-atl](https://mipalgu.github.io/swift-atl/) - ATL model transformations ([GitHub](https://github.com/mipalgu/swift-atl))
+- [swift-henshin](https://mipalgu.github.io/swift-henshin/) - Henshin graph transformation, critical pair analysis and state-space exploration ([GitHub](https://github.com/mipalgu/swift-henshin))
+- [swift-epsilon](https://mipalgu.github.io/swift-epsilon/) - Epsilon model management languages (EOL, EVL, ETL and EGL) ([GitHub](https://github.com/mipalgu/swift-epsilon))
+- [swift-modelling](https://mipalgu.github.io/swift-modelling/) - Command-line tools, code generators and tutorials for the whole toolkit ([GitHub](https://github.com/mipalgu/swift-modelling))
 
 ## Documentation
 
 The package runs Xtend generators and transformations over Ecore models.
 For details, see [Getting Started](https://mipalgu.github.io/swift-xtend/documentation/xtend/gettingstarted) and [The Supported Subset](https://mipalgu.github.io/swift-xtend/documentation/xtend/supportedsubset).
+
+The `swift-xtend` command-line tool of [swift-modelling](https://mipalgu.github.io/swift-modelling/)
+is described in [swift-xtend](https://mipalgu.github.io/swift-modelling/documentation/swift_xtend/index.html),
+and the [Xtend tutorial](https://mipalgu.github.io/swift-modelling/tutorials/swiftmodelling/xtend-01-code-generation/index.html)
+introduces it step by step (see all [tutorials](https://mipalgu.github.io/swift-modelling/tutorials/tutorials/index.html)).
+
+- [Xtend module documentation](documentation/xtend/)
+- [Getting Started](documentation/xtend/gettingstarted/)
+- [The Supported Subset](documentation/xtend/supportedsubset/)
+- [Rich Strings](documentation/xtend/richstrings/)
+- [Generators and Transformations](documentation/xtend/generators/)
+- [Code Generation with Xtend](https://mipalgu.github.io/swift-modelling/tutorials/swiftmodelling/xtend-01-code-generation/index.html)
